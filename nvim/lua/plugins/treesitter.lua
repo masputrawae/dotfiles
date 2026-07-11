@@ -23,7 +23,11 @@ return {
         "vim",
         "yaml",
         "mdx",
+        "templ",
       },
+
+      sync_install = true,
+      auto_install = true,
 
       highlight = {
         enable = true,
@@ -32,6 +36,7 @@ return {
       indent = {
         enable = true,
       },
+
     },
   },
 }

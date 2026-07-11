@@ -24,6 +24,8 @@ return {
         "cssls",
         "jsonls",
         "marksman",
+        "html",
+        "templ",
       },
     },
   },
@@ -48,6 +50,8 @@ return {
         "cssls",
         "jsonls",
         "marksman",
+        "html",
+        "templ",
       }
 
       for _, server in ipairs(servers) do
@@ -55,6 +59,16 @@ return {
           capabilities = capabilities,
         })
       end
+
+      vim.lsp.config("html", {
+        capabilities = capabilities,
+        filetypes = { "html", "templ" },
+      })
+
+      vim.lsp.config("templ", {
+        capabilities = capabilities,
+        filetypes = { "templ" },
+      })
 
       vim.lsp.enable(servers)
 
