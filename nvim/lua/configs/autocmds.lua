@@ -20,14 +20,15 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 rm_bg()
 
 vim.filetype.add({ extension = { templ = "templ" } })
-vim.api.nvim_create_autocmd("BufEnter", {
-    pattern = "*.templ",
-    callback = function()
-        -- Cek apakah treesitter untuk templ tersedia
-        local parser = vim.treesitter.get_parser()
-        if parser then
-            -- Aktifkan highlight dengan cara yang benar
-            vim.cmd("TSBufEnable highlight")
-        end
-    end,
+
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*.templ" },
+  callback = vim.lsp.buf.format
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'templ',
+  callback = function()
+    vim.treesitter.start()
+  end,
 })

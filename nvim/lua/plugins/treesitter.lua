@@ -3,6 +3,8 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    dependencies = { 'neovim-treesitter/treesitter-parser-registry' },
+    lazy = false,
     opts = {
       ensure_installed = {
         "bash",
@@ -23,6 +25,7 @@ return {
         "vim",
         "yaml",
         "mdx",
+        "gotmpl",
         "templ",
       },
 
