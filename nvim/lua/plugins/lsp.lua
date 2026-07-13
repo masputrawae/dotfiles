@@ -17,6 +17,7 @@ return {
     },
     opts = {
       ensure_installed = {
+        "codebook",
         "lua_ls",
         "pyright",
         "ts_ls",
@@ -43,6 +44,8 @@ return {
           require("blink.cmp").get_lsp_capabilities()
 
       local servers = {
+        "codebook",
+        "emmet-ls",
         "lua_ls",
         "pyright",
         "ts_ls",
@@ -60,15 +63,16 @@ return {
         })
       end
 
+      vim.lsp.config("templ", {
+        capabilities = capabilities,
+        filetypes = { "templ" },
+      })
+
       vim.lsp.config("html", {
         capabilities = capabilities,
         filetypes = { "html", "templ" },
       })
 
-      vim.lsp.config("templ", {
-        capabilities = capabilities,
-        filetypes = { "templ" },
-      })
 
       vim.lsp.enable(servers)
 
@@ -99,7 +103,10 @@ return {
   {
     "saghen/blink.cmp",
     version = "*",
-    dependencies = { "rafamadriz/friendly-snippets" },
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      "L3MON4D3/LuaSnip",
+    },
 
     opts = {
       keymap = { preset = "super-tab" },
