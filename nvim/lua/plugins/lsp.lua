@@ -5,7 +5,9 @@ return {
     "williamboman/mason.nvim",
     build = ":MasonUpdate",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
-    opts = {}
+    opts = function()
+      require("mason").setup()
+    end,
   },
 
   -- Mason bridge ke lspconfig
@@ -17,16 +19,17 @@ return {
     },
     opts = {
       ensure_installed = {
+        "ts_ls",
         "codebook",
         "lua_ls",
         "pyright",
-        "ts_ls",
         "gopls",
         "cssls",
         "jsonls",
         "marksman",
         "html",
         "templ",
+        "tailwindcss",
       },
     },
   },
@@ -44,17 +47,18 @@ return {
           require("blink.cmp").get_lsp_capabilities()
 
       local servers = {
+        "ts_ls",
         "codebook",
         "emmet-ls",
         "lua_ls",
         "pyright",
-        "ts_ls",
         "gopls",
         "cssls",
         "jsonls",
         "marksman",
         "html",
         "templ",
+        "tailwindcss",
       }
 
       for _, server in ipairs(servers) do
@@ -62,6 +66,23 @@ return {
           capabilities = capabilities,
         })
       end
+
+      -- Konfigurasi khusus ts_ls dengan root_dir
+      vim.lsp.config("ts_ls", {
+        capabilities = capabilities,
+        root_dir = require("lspconfig.util").root_pattern(
+          "package.json",
+          "tsconfig.json",
+          ".git"
+        ),
+        settings = {
+          typescript = {
+            tsserver = {
+              useSeparateSyntaxServer = false,
+            },
+          },
+        },
+      })
 
       vim.lsp.config("templ", {
         capabilities = capabilities,
@@ -71,6 +92,18 @@ return {
       vim.lsp.config("html", {
         capabilities = capabilities,
         filetypes = { "html", "templ" },
+      })
+
+      vim.lsp.config("tailwindcss", {
+        capabilities = capabilities,
+        filetypes = { "templ", "astro", "javascript", "typescript", "react" },
+        settings = {
+          tailwindCSS = {
+            includeLanguages = {
+              templ = "html",
+            },
+          },
+        },
       })
 
 
