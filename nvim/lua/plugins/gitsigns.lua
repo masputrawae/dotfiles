@@ -1,38 +1,48 @@
--- lua/plugins/gitsigns.lua
+-- lua/plugins/productivity/gitsigns.lua
 return {
   {
     "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      signs = {
-        add = { text = "▎" },
-        change = { text = "▎" },
-        delete = { text = "" },
-        topdelete = { text = "" },
-        changedelete = { text = "▎" },
-        untracked = { text = "▎" },
-      },
-      on_attach = function(buffer)
-        local gs = package.loaded.gitsigns
+    lazy = true,
+    event = "BufReadPre",
+    config = function()
+      local gitsigns = require("gitsigns")
+      gitsigns.setup({
+        signs = {
+          add = { text = "▎" },
+          change = { text = "▎" },
+          delete = { text = "" },
+          topdelete = { text = "" },
+          changedelete = { text = "▎" },
+          untracked = { text = "▎" },
+        },
+        signs_staged = {
+          add = { text = "▎" },
+          change = { text = "▎" },
+          delete = { text = "" },
+          topdelete = { text = "" },
+          changedelete = { text = "▎" },
+        },
+        on_attach = function(bufnr)
+          local map = function(mode, lhs, rhs, opts)
+            opts = vim.tbl_extend("force", { buffer = bufnr }, opts or {})
+            vim.keymap.set(mode, lhs, rhs, opts)
+          end
 
-        local function map(mode, l, r, desc)
-          vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
-        end
-
-        -- Navigasi antar perubahan (hunk)
-        map("n", "]h", gs.next_hunk, "Next Hunk")
-        map("n", "[h", gs.prev_hunk, "Prev Hunk")
-
-        -- Actions
-        map("n", "<leader>hs", gs.stage_hunk, "Stage Hunk")
-        map("n", "<leader>hr", gs.reset_hunk, "Reset Hunk")
-        map("n", "<leader>hS", gs.stage_buffer, "Stage Buffer")
-        map("n", "<leader>hu", gs.undo_stage_hunk, "Undo Stage Hunk")
-        map("n", "<leader>hR", gs.reset_buffer, "Reset Buffer")
-        map("n", "<leader>hp", gs.preview_hunk, "Preview Hunk")
-        map("n", "<leader>hb", function() gs.blame_line({ full = true }) end, "Blame Line")
-        map("n", "<leader>hd", gs.diffthis, "Diff This")
-      end,
-    },
+          map("n", "]h", gitsigns.next_hunk, { desc = "Next git hunk" })
+          map("n", "[h", gitsigns.prev_hunk, { desc = "Prev git hunk" })
+          map("n", "<leader>gs", gitsigns.stage_hunk, { desc = "Stage hunk" })
+          map("n", "<leader>gr", gitsigns.reset_hunk, { desc = "Reset hunk" })
+          map("v", "<leader>gs", function() gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, { desc = "Stage visual hunk" })
+          map("v", "<leader>gr", function() gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, { desc = "Reset visual hunk" })
+          map("n", "<leader>gS", gitsigns.stage_buffer, { desc = "Stage all" })
+          map("n", "<leader>gR", gitsigns.reset_buffer, { desc = "Reset all" })
+          map("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview hunk" })
+          map("n", "<leader>gb", function() gitsigns.blame_line({ full = true }) end, { desc = "Blame line" })
+          map("n", "<leader>gd", gitsigns.diffthis, { desc = "Diff this" })
+          map("n", "<leader>gD", function() gitsigns.diffthis("~") end, { desc = "Diff with previous" })
+          map("n", "<leader>gt", gitsigns.toggle_current_line_blame, { desc = "Toggle blame" })
+        end,
+      })
+    end,
   },
 }

@@ -1,29 +1,27 @@
--- ~/.config/nvim/lua/config/autocmds.lua
+-- lua/core/autocmds.lua
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 
--- Background transparan (Opsional: hapus jika ingin pakai background colorscheme)
-local rm_bg = function()
-  vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
-  vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE", ctermbg = "NONE" })
-  vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE", ctermbg = "NONE" })
-  vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE", ctermbg = "NONE" })
-  vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NONE", ctermbg = "NONE" })
-  vim.api.nvim_set_hl(0, "VertSplit", { bg = "NONE", ctermbg = "NONE" })
-end
+-- Grup untuk autocmd umum
+local general = augroup("General", { clear = true })
 
--- Panggil saat awal dan saat ganti colorscheme
-vim.api.nvim_create_autocmd("ColorScheme", {
-  pattern = "*",
-  callback = rm_bg,
-})
-
--- Jalankan sekali saat startup
-rm_bg()
-
-vim.filetype.add({ extension = { templ = "templ" } })
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'templ',
+-- Highlight saat yank
+autocmd("TextYankPost", {
+  group = general,
   callback = function()
-    vim.treesitter.start()
+    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
   end,
 })
+
+-- Kembali ke posisi terakhir saat membuka file
+autocmd("BufReadPost", {
+  group = general,
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    local lcount = vim.api.nvim_buf_line_count(0)
+    if mark[1] > 0 and mark[1] <= lcount then
+      vim.cmd('normal! g`"')
+    end
+  end,
+})
+
