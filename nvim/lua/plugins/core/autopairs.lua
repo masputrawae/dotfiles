@@ -1,10 +1,10 @@
 return {
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = true,
-    opts = {
-      check_ts = true,
-    }
-  }
+  "windwp/nvim-autopairs",
+  event = "InsertEnter",
+  config = function()
+    local autopairs = require("nvim-autopairs")
+    autopairs.setup({
+      check_ts = true, -- Aktifkan integrasi Tree-sitter
+    })
+  end,
 }

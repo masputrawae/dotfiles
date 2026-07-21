@@ -10,6 +10,7 @@ return {
       "saadparwaiz1/cmp_luasnip",
       "onsails/lspkind.nvim",
       "rafamadriz/friendly-snippets",
+      "hrsh7th/cmp-emoji"
     },
     config = function()
       local cmp = require("cmp")
@@ -49,6 +50,7 @@ return {
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "luasnip" },
+          { name = 'emoji' },
         }, {
           { name = "buffer" },
           { name = "path" },
