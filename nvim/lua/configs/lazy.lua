@@ -22,7 +22,11 @@ require("configs.autocmds")
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  -- install = { colorscheme = { "habamax" } },
+  install = { colorscheme = { "habamax" } },
+  spec = {
+    { import = "plugins.core" },
+    { import = "plugins.lang" },
+  },
   defaults = {
     lazy = true,
     version = false,
@@ -30,12 +34,9 @@ require("lazy").setup({
   change_detection = {
     notify = false,
   },
-  spec = {
-    { import = "plugins" },
-  },
   checker = { 
     enabled = true,
-    notify = false,
+    notify = true,
   },
 })
 
