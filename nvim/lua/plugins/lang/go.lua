@@ -17,8 +17,7 @@ return {
       group = format_sync_grp,
     })
     return {
-      lsp_keymaps = false,
-      -- other options
+      lsp_keymaps = true,
     }
   end,
   event = { "CmdlineEnter" },
