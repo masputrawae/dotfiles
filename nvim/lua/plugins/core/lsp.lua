@@ -1,7 +1,7 @@
 -- Daftar server yang akan dipasang
 local lsp_servers = {
   "lua_ls",
-  "vtsls",
+  "ts_ls",
   "pyright",
   "gopls",
   "codebook",
@@ -45,7 +45,6 @@ return {
       require("mason-lspconfig").setup({
         ensure_installed = lsp_servers,
         automatic_installation = true,
-        -- automatic_enable tidak diperlukan karena kita mengaktifkan server secara eksplisit
       })
     end,
   },
@@ -56,13 +55,13 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
+      local lspconfig = require("lspconfig")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
       require("mason-lspconfig").setup({
         handlers = {
           function(server_name)
-            local lspconfig = require("lspconfig")
             if lspconfig[server_name] then
               lspconfig[server_name].setup({
                 capabilities = capabilities,
@@ -72,7 +71,7 @@ return {
         },
       })
 
-      -- gunakan jika sudah stabil
+      -- cara di bawah ini kurang stabil. jadi pakai cara di atas saja
       -- for _, server in ipairs(lsp_servers) do
       -- vim.lsp.config(server, {
       --  capabilities = capabilities,
