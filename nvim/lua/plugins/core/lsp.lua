@@ -28,8 +28,8 @@ return {
         ui = {
           border = "rounded",
           icons = {
-            package_installed   = "✅",
-            package_pending     = "⏳",
+            package_installed = "✅",
+            package_pending = "⏳",
             package_uninstalled = "❌",
           },
         },
@@ -37,10 +37,12 @@ return {
     end,
   },
 
-  -- Mason-LSPConfig: memastikan server LSP terinstal
+  -- Mason-LSPConfig
   {
     "mason-org/mason-lspconfig.nvim",
-    dependencies = { "mason-org/mason.nvim" },
+    dependencies = {
+      "mason-org/mason.nvim",
+    },
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = lsp_servers,
@@ -49,41 +51,56 @@ return {
     end,
   },
 
-  -- nvim-lspconfig (sebenarnya kita pakai API bawaan vim.lsp, tetapi tetap butuh plugin untuk
-  -- integrasi dengan mason, meskipun kita tidak memanggil lspconfig.setup)
+  -- nvim-lspconfig dengan API Neovim 0.11+
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      local lspconfig = require("lspconfig")
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-      require("mason-lspconfig").setup({
-        handlers = {
-          function(server_name)
-            if lspconfig[server_name] then
-              lspconfig[server_name].setup({
-                capabilities = capabilities,
-              })
-            end
-          end,
+    config = function()
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      -- Konfigurasi umum semua LSP
+      for _, server in ipairs(lsp_servers) do
+        vim.lsp.config(server, {
+          capabilities = capabilities,
+        })
+      end
+
+      vim.lsp.config("html", {
+        capabilities = capabilities,
+        filetypes = {
+          "templ",
+          "html",
         },
       })
 
-      -- cara di bawah ini kurang stabil. jadi pakai cara di atas saja
-      -- for _, server in ipairs(lsp_servers) do
-      -- vim.lsp.config(server, {
-      --  capabilities = capabilities,
-      -- })
-      -- end
-      -- vim.lsp.enable(lsp_servers)
+      vim.lsp.config("templ", {
+        capabilities = capabilities,
+        filetypes = {
+          "templ",
+        },
+      })
 
-      -- Keymaps yang dipasang saat LSP terattach ke buffer
+      vim.lsp.config("htmx", {
+        capabilities = capabilities,
+        filetypes = {
+          "templ",
+          "html",
+        },
+      })
+
+      -- Aktifkan semua LSP
+      vim.lsp.enable(lsp_servers)
+
+
+      -- Keymaps saat LSP attach
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local map = function(mode, lhs, rhs)
-            vim.keymap.set(mode, lhs, rhs, { buffer = args.buf })
+            vim.keymap.set(mode, lhs, rhs, {
+              buffer = args.buf,
+              silent = true,
+            })
           end
 
           map("n", "gd", vim.lsp.buf.definition)
@@ -93,8 +110,11 @@ return {
           map("n", "K", vim.lsp.buf.hover)
           map("n", "<leader>rn", vim.lsp.buf.rename)
           map("n", "<leader>ca", vim.lsp.buf.code_action)
+
           map("n", "<leader>f", function()
-            vim.lsp.buf.format({ async = false })
+            vim.lsp.buf.format({
+              async = false,
+            })
           end)
         end,
       })
