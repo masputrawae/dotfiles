@@ -15,6 +15,7 @@ local lsp_servers = {
   "htmx",
   "templ",
   "astro",
+  "postgres_lsp",
 }
 
 return {
