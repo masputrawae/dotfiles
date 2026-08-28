@@ -4,7 +4,7 @@ return {
   config = function()
     local autopairs = require("nvim-autopairs")
     autopairs.setup({
-      check_ts = true, -- Aktifkan integrasi Tree-sitter
+      check_ts = true,
     })
   end,
 }

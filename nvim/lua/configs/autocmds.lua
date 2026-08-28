@@ -24,17 +24,3 @@ autocmd("BufReadPost", {
     end
   end,
 })
-
-autocmd("BufEnter", {
-  group = general,
-  pattern = "*.templ",
-  callback = function()
-    vim.treesitter.start()
-  end,
-})
-
-autocmd({ "BufWritePre" }, {
-  group = general,
-  pattern = { "*.templ" },
-  callback = vim.lsp.buf.format
-})

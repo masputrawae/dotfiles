@@ -12,10 +12,7 @@ local lsp_servers = {
   "jsonls",
   "marksman",
   "html",
-  "htmx",
-  "templ",
   "astro",
-  "postgres_lsp",
 }
 
 return {
@@ -67,32 +64,18 @@ return {
         })
       end
 
-      vim.lsp.config("html", {
+      vim.lsp.config("astro", {
         capabilities = capabilities,
-        filetypes = {
-          "templ",
-          "html",
-        },
-      })
-
-      vim.lsp.config("templ", {
-        capabilities = capabilities,
-        filetypes = {
-          "templ",
-        },
-      })
-
-      vim.lsp.config("htmx", {
-        capabilities = capabilities,
-        filetypes = {
-          "templ",
-          "html",
+        init_options = {
+          typescript = {
+            tsdk = vim.fn.stdpath("data")
+                .. "/mason/packages/typescript-language-server/node_modules/typescript/lib",
+          },
         },
       })
 
       -- Aktifkan semua LSP
       vim.lsp.enable(lsp_servers)
-
 
       -- Keymaps saat LSP attach
       vim.api.nvim_create_autocmd("LspAttach", {

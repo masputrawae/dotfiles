@@ -2,9 +2,6 @@ return {
   "nvim-treesitter/nvim-treesitter",
   lazy = false,
   build = ":TSUpdate",
-  dependencies = {
-    'vrischmann/tree-sitter-templ',
-  },
   opts = {
     ensure_installed = {
       "bash",
@@ -31,7 +28,6 @@ return {
       "xml",
       "yaml",
       "go",
-      "templ",
     },
     auto_install = true,
     sync_install = false,

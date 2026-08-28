@@ -19,12 +19,12 @@ return {
       -- Options are anything that can be passed to the `vim.api.nvim_set_hl` table
       -- You can also configure styles with a string, e.g. keywords = 'italic,bold'
       code_style = {
-        comments = { italic = true },
-        conditionals = { italic = true },
+        comments = { italic = false },
+        conditionals = { italic = false },
         keywords = {},
         functions = {},
-        namespaces = { italic = true },
-        parameters = { italic = true },
+        namespaces = { italic = false },
+        parameters = { italic = false },
         strings = {},
         variables = {},
       },
@@ -40,7 +40,7 @@ return {
 
       -- Plugins Config --
       diagnostics = {
-        darker = false,      -- darker colors for diagnostic
+        darker = true,      -- darker colors for diagnostic
         undercurl = true,    -- use undercurl instead of underline for diagnostics
         background = false,   -- use background color for virtual text
       },
@@ -48,30 +48,3 @@ return {
     require('bamboo').load()
   end,
 }
-
---[[
-return {
-  'AlexvZyl/nordic.nvim',
-  lazy = false,
-  priority = 1000,
-  config = function()
-    require('nordic').setup({
-      bold_keywords = true,
-      italic_comments = true,
-      transparent = {
-        bg = true,
-        float = true,
-      },
-      bright_border = true,
-      reduced_blue = false,
-      swap_backgrounds = false,
-      cursorline = {
-        bold = true,
-        bold_number = true,
-        theme = 'dark',
-      },
-    })
-    vim.cmd.colorscheme("nordic")
-  end
-}
-]]

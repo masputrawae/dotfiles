@@ -65,8 +65,8 @@ return {
             menu = {
               nvim_lsp = "[LSP]",
               luasnip = "[Snippet]",
-              buffer = "[Buffer]",
               path = "[Path]",
+              buffer = "[Buffer]",
             },
           }),
         },

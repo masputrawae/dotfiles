@@ -2,7 +2,7 @@
 return {
   {
     "nvim-mini/mini.ai",
-    version = false, -- false untuk menggunakan branch main, atau "stable" untuk versi stabil
+    version = false,
     config = function()
       require("mini.comment").setup()
       require("mini.ai").setup({
