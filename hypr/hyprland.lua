@@ -130,7 +130,7 @@ hl.config({
   },
 
   animations = {
-    enabled = true,
+    enabled = false,
   },
 })
 
