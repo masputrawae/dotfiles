@@ -1,26 +1,17 @@
--- lua/core/autocmds.lua
-local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
--- Grup untuk autocmd umum
-local general = augroup("General", { clear = true })
-
--- Highlight saat yank
-autocmd("TextYankPost", {
-  group = general,
-  callback = function()
-    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
-  end,
+autocmd("PackChanged", {
+	desc = "Build blink.cmp after install/update",
+	group = augroup("blink_build", { clear = true }),
+	callback = function(ev)
+		local name, kind = ev.data.spec.name, ev.data.kind
+		if name == "blink.cmp" and (kind == "install" or kind == "update") then
+			vim.notify("Building blink.cmp...", vim.log.levels.INFO)
+			vim.system({ "cargo", "build", "--release" }, { cwd = ev.data.path }):wait()
+			local cmp = require("blink.cmp")
+			cmp.build():pwait()
+		end
+	end,
 })
 
--- Kembali ke posisi terakhir saat membuka file
-autocmd("BufReadPost", {
-  group = general,
-  callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local lcount = vim.api.nvim_buf_line_count(0)
-    if mark[1] > 0 and mark[1] <= lcount then
-      vim.cmd('normal! g`"')
-    end
-  end,
-})

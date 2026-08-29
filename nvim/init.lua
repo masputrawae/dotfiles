@@ -1,3 +1,4 @@
-vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
+require("configs")
 
-require("configs.lazy")
+vim.cmd.colorscheme("catppuccin")
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
