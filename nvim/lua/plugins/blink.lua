@@ -51,6 +51,7 @@ return {
 				"fallback",
 			},
 
+			--[[
 			["<S-j>"] = {
 				"select_next",
 				"fallback",
@@ -60,6 +61,7 @@ return {
 				"select_prev",
 				"fallback",
 			},
+      ]]
 		},
 
 		completion = {

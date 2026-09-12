@@ -12,6 +12,7 @@ return {
 			"bash",
 			"python",
 			"rust",
+      "sql",
 		},
 		auto_install = true,
 	},

@@ -1,11 +1,13 @@
 return {
 	"neovim/nvim-lspconfig",
 	config = function()
-    vim.lsp.config("gopls", require("lsp.gopls"))
+		vim.lsp.config("gopls", require("lsp.gopls"))
 		vim.lsp.config("lua_ls", require("lsp.lua_ls"))
+		vim.lsp.config("sqls", require("lsp.sqls"))
 
 		vim.lsp.enable("gopls")
 		vim.lsp.enable("lua_ls")
+		vim.lsp.enable("sqls")
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
