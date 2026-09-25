@@ -1,6 +1,7 @@
 return {
 	settings = {
 		gopls = {
+			--[[
 			hints = {
 				rangeVariableTypes = true,
 				parameterNames = true,
@@ -10,6 +11,7 @@ return {
 				compositeLiteralTypes = true,
 				functionTypeParameters = true,
 			},
+      ]]
 
 			codelenses = {
 				references = true,
@@ -21,7 +23,6 @@ return {
 			},
 
 			completeUnimported = true,
-			usePlaceholders = true,
 			analyses = {
 				unusedparams = true,
 			},

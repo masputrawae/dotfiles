@@ -68,6 +68,12 @@ return {
 			keyword = {
 				range = "full",
 			},
+
+			trigger = {
+				show_on_keyword = true,
+				show_on_trigger_character = false,
+			},
+
 			menu = {
 				auto_show = true,
 
