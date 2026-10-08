@@ -12,7 +12,6 @@ return {
 			"eslint",
 			"lua_ls",
 			"tailwindcss-language-server",
-			"ts_ls",
 			"gopls",
 			"sqls",
 			"jsonls",
