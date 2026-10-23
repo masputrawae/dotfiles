@@ -10,7 +10,6 @@ return {
 			"stylua",
 			"prettierd",
 			"eslint",
-			"lua_ls",
 			"tailwindcss-language-server",
 			"gopls",
 			"sqls",

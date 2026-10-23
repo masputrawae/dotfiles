@@ -4,10 +4,12 @@ return {
 		vim.lsp.config("gopls", require("lsp.gopls"))
 		vim.lsp.config("lua_ls", require("lsp.lua_ls"))
 		vim.lsp.config("sqls", require("lsp.sqls"))
+		vim.lsp.config("tsc", require("lsp.tsc"))
 
 		vim.lsp.enable("gopls")
 		vim.lsp.enable("lua_ls")
 		vim.lsp.enable("sqls")
+		vim.lsp.enable("tsc")
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -26,7 +28,9 @@ return {
 				vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts("Go to type definition"))
 				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts("Rename symbol"))
 				vim.keymap.set("n", "gr", vim.lsp.buf.references, opts("Find references"))
-				vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts("Format buffer"))
+				vim.keymap.set("n", "<leader>f", function()
+					require("conform").format({ async = true, lsp_format = "fallback" })
+				end, opts("Format buffer"))
 				vim.keymap.set("n", "<leader>d", function()
 					vim.diagnostic.open_float({
 						border = "rounded",
