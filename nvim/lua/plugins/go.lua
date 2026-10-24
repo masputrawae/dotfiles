@@ -4,10 +4,7 @@ return {
 	dependencies = {
 		"ray-x/guihua.lua",
 		"neovim/nvim-lspconfig",
-		{
-			"nvim-treesitter/nvim-treesitter",
-			branch = "main",
-		},
+		"nvim-treesitter/nvim-treesitter",
 	},
 
 	ft = { "go", "gomod" },

@@ -13,8 +13,11 @@ return {
 			"python",
 			"rust",
 			"sql",
+			"go",
 			"gotmpl",
+			"html",
 		},
 		auto_install = true,
+		highlight = true,
 	},
 }

@@ -5,11 +5,13 @@ return {
 		vim.lsp.config("lua_ls", require("lsp.lua_ls"))
 		vim.lsp.config("sqls", require("lsp.sqls"))
 		vim.lsp.config("tsc", require("lsp.tsc"))
+		vim.lsp.config("html", require("lsp.html"))
 
 		vim.lsp.enable("gopls")
 		vim.lsp.enable("lua_ls")
 		vim.lsp.enable("sqls")
 		vim.lsp.enable("tsc")
+		vim.lsp.enable("html")
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),

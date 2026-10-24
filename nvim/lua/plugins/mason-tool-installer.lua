@@ -16,6 +16,7 @@ return {
 			"jsonls",
 			"yamlls",
 			"biome",
+			"html-lsp",
 		},
 
 		auto_update = true,

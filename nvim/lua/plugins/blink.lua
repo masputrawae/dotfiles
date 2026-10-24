@@ -11,6 +11,7 @@ return {
 
 	config = function(_, opts)
 		require("luasnip.loaders.from_vscode").lazy_load()
+		require("luasnip").filetype_extend("gotmpl", { "html" })
 		require("blink.cmp").setup(opts)
 	end,
 
