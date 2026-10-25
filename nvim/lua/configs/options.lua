@@ -44,15 +44,8 @@ opt.linebreak = true -- jika wrap, putus di spasi/kata
 opt.breakindent = true -- indentasi baris yang di-wrap
 
 opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldlevel = 99 -- buka semua fold secara default
 
 opt.completeopt = { "menuone", "noselect" } -- tampil menu walau 1 item, jangan pilih otomatis
 opt.fillchars = { foldopen = "", foldclose = "" } -- ikon fold modern
-
-vim.filetype.add({
-	extension = {
-		tmpl = "gotmpl",
-		gotmpl = "gotmpl",
-	},
-})

@@ -9,7 +9,10 @@ return {
 			json = { "prettier" },
 			css = { "prettier" },
 			html = { "prettier" },
+			gotmpl = { "prettier" },
 			markdown = { "prettier" },
+			go = { "goimports", "gofmt" },
+			lua = { "stylua" },
 		},
 
 		format_on_save = function()

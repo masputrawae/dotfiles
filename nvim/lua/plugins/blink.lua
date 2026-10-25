@@ -1,5 +1,7 @@
 return {
 	"Saghen/blink.cmp",
+	version = "*",
+	build = "cargo build --release",
 
 	dependencies = {
 		"L3MON4D3/LuaSnip",
@@ -51,18 +53,6 @@ return {
 				"snippet_backward",
 				"fallback",
 			},
-
-			--[[
-			["<S-j>"] = {
-				"select_next",
-				"fallback",
-			},
-
-			["<S-k>"] = {
-				"select_prev",
-				"fallback",
-			},
-      ]]
 		},
 
 		completion = {
@@ -72,7 +62,7 @@ return {
 
 			trigger = {
 				show_on_keyword = true,
-				show_on_trigger_character = false,
+				show_on_trigger_character = true,
 			},
 
 			menu = {
@@ -103,7 +93,7 @@ return {
 		},
 
 		fuzzy = {
-			implementation = "lua",
+			implementation = "rust",
 			sorts = {
 				"exact",
 				"score",
@@ -131,6 +121,7 @@ return {
 			providers = {
 				lsp = {
 					score_offset = 100,
+					timeout_ms = 200,
 				},
 				emoji = {
 					module = "blink-cmp-emoji",

@@ -1,12 +1,26 @@
-local root_files = { "tsconfig.json", "jsconfig.json", "package.json", ".git" }
-local paths = vim.fs.find(root_files, { stop = vim.env.HOME })
-local root_dir = vim.fs.dirname(paths[1]) or vim.fn.getcwd()
-
----@type vim.lsp.Config
-local M = {}
-
-M.cmd = { "tsc", "--lsp", "--stdio" }
-M.filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" }
-M.root_dir = root_dir
-
-return M
+return {
+	settings = {
+		["js/ts"] = {
+			inlayHints = {
+				parameterNames = {
+					enabled = "literals",
+					suppressWhenArgumentMatchesName = true,
+				},
+				parameterTypes = { enabled = true },
+				variableTypes = { enabled = true },
+				propertyDeclarationTypes = { enabled = true },
+				functionLikeReturnTypes = { enabled = true },
+				enumMemberValues = { enabled = true },
+			},
+			referencesCodeLens = {
+				enabled = true,
+				showOnAllFunctions = true,
+			},
+			implementationsCodeLens = {
+				enabled = true,
+				showOnInterfaceMethods = true,
+				showOnAllClassMethods = true,
+			},
+		},
+	},
+}

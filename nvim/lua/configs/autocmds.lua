@@ -1,17 +1,22 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-autocmd("PackChanged", {
-	desc = "Build blink.cmp after install/update",
-	group = augroup("blink_build", { clear = true }),
-	callback = function(ev)
-		local name, kind = ev.data.spec.name, ev.data.kind
-		if name == "blink.cmp" and (kind == "install" or kind == "update") then
-			vim.notify("Building blink.cmp...", vim.log.levels.INFO)
-			vim.system({ "cargo", "build", "--release" }, { cwd = ev.data.path }):wait()
-			local cmp = require("blink.cmp")
-			cmp.build():pwait()
-		end
+-- Highlight saat menyalin (yank)
+autocmd("TextYankPost", {
+	desc = "Highlight when yanking text",
+	group = augroup("highlight_yank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
 	end,
 })
 
+-- Sesuaikan ukuran split saat ukuran terminal/window berubah
+autocmd("VimResized", {
+	desc = "Resize splits when window is resized",
+	group = augroup("resize_splits", { clear = true }),
+	callback = function()
+		local current_tab = vim.fn.tabpagenr()
+		vim.cmd("tabdo wincmd =")
+		vim.cmd("tabnext " .. current_tab)
+	end,
+})
