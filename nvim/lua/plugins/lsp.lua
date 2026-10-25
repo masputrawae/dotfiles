@@ -40,7 +40,7 @@ return {
 				vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
 				vim.keymap.set("n", "gr", vim.lsp.buf.references, opts("Find references"))
 				vim.keymap.set("n", "<leader>f", function()
-					require("conform").format({ async = true, lsp_format = "fallback" })
+					require("conform").format({ async = false, lsp_format = "fallback" })
 				end, opts("Format buffer"))
 				vim.keymap.set("n", "<leader>d", function()
 					vim.diagnostic.open_float({
