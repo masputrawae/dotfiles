@@ -1,10 +1,14 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	branch = "master", -- 👈 Kunci penyelesaiannya ada di sini
+	branch = "main",
 	lazy = false,
 	build = ":TSUpdate",
-	opts = {
-		ensure_installed = {
+	config = function()
+		-- 1. Setup parser yang otomatis terinstall
+		require("nvim-treesitter.install").update({ with_sync = true })
+
+		-- 2. Daftar bahasa yang wajib di-install
+		local ensure_installed = {
 			"lua",
 			"vim",
 			"vimdoc",
@@ -23,14 +27,19 @@ return {
 			"go",
 			"gotmpl",
 			"make",
-		},
-		auto_install = true,
-		highlight = {
-			enable = true,
-		},
-		incremental_selection = { enable = true },
-	},
-	config = function(_, opts)
-		require("nvim-treesitter.configs").setup(opts)
+		}
+
+		-- Install otomatis jika belum ada
+		for _, lang in ipairs(ensure_installed) do
+			pcall(vim.cmd, "TSInstall " .. lang)
+		end
+
+		-- 3. Aktifkan fitur highlighting bawaan Neovim (v0.10+) via Treesitter
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = ensure_installed,
+			callback = function(ev)
+				pcall(vim.treesitter.start, ev.buf)
+			end,
+		})
 	end,
 }
