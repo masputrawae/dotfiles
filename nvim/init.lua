@@ -1,9 +1,9 @@
 require("configs")
 
 vim.filetype.add({
-  extension = {
-    tmpl = "gotmpl",
-    gotmpl = "gotmpl",
-    html = "gotmpl",
-  },
+	extension = {
+		tmpl = "gotmpl",
+		gotmpl = "gotmpl",
+		html = "gotmpl",
+	},
 })
