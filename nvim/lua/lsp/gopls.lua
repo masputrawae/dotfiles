@@ -1,7 +1,8 @@
 return {
-  filetypes = { "go", "gomod", "gowork" },
-  settings = {
-    gopls = {
+	filetypes = { "go", "gomod", "gowork" },
+	settings = {
+		gopls = {
+			--[[
       hints = {
         rangeVariableTypes = true,
         parameterNames = true,
@@ -11,20 +12,21 @@ return {
         compositeLiteralTypes = true,
         functionTypeParameters = true,
       },
+      ]]
+			--
+			codelenses = {
+				references = true,
+				implementations = true,
+				gc_details = true,
+				run_govulncheck = true,
+				test = true,
+				generate = true,
+			},
 
-      codelenses = {
-        references = true,
-        implementations = true,
-        gc_details = true,
-        run_govulncheck = true,
-        test = true,
-        generate = true,
-      },
-
-      completeUnimported = true,
-      analyses = {
-        unusedparams = true,
-      },
-    },
-  },
+			completeUnimported = true,
+			analyses = {
+				unusedparams = true,
+			},
+		},
+	},
 }
